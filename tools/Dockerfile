@@ -1,4 +1,4 @@
-FROM asvinours/php7-base:latest
+FROM asvinours/php-base:latest
 
 # Install composer
 RUN bash -c "wget http://getcomposer.org/composer.phar && chmod +x composer.phar && mv composer.phar /usr/local/bin/composer"

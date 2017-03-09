@@ -1,11 +1,11 @@
-FROM php:5.6-fpm
+FROM php:7.1-fpm
 
 # Get repository and install wget and vim
 RUN apt-get update && apt-get install --no-install-recommends -y \
         curl \
         wget \
-        vim \
         git \
+        zip \
         unzip \
         gettext \
         libfreetype6-dev \

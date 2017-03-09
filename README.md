@@ -2,14 +2,14 @@
 
 ### Available images
 
-###### Php-Base
+###### Php5-Base
 
 This images is based on php5.6-fpm.
 I have added some php extensions and tools that I usually need
 
-###### Php7-Base
+###### Php-Base
 
-Pretty much the same config than php-base but based on php7.1-fpm
+Pretty much the same config than php5-base but based on php7.1-fpm
 
 ###### Tools
 
