@@ -1,7 +1,20 @@
 FROM asvinours/php-base:latest
 
-# Install composer
-RUN bash -c "wget http://getcomposer.org/composer.phar && chmod +x composer.phar && mv composer.phar /usr/local/bin/composer"
+# Install composer and phan
+RUN bash -c "wget http://getcomposer.org/composer.phar && chmod +x composer.phar && mv composer.phar /usr/local/bin/composer" \
+    && curl -SsL https://github.com/etsy/phan/releases/download/0.9.0/phan.phar -o /usr/local/bin/phan \
+    && chmod +x /usr/local/bin/phan
+
+# Install php-ast extension
+RUN git clone https://github.com/nikic/php-ast.git /tmp/php-ast \
+    && cd /tmp/php-ast \
+    && phpize \
+    && ./configure \
+    && make -j4 \
+    && make install \
+    && docker-php-ext-enable ast \
+    && cd \
+    && rm -rf /tmp/php-ast
 
 # Install nodejs
 # gpg keys listed at https://github.com/nodejs/node
@@ -15,6 +28,7 @@ RUN set -ex \
     DD8F2338BAE7501E3DD5AC78C273792F7D83545D \
     B9AE9905FFD7803F25714661B63B535A4C206CA9 \
     C4F0DFFF4E8C1A8236409D08E73BC641CC11F4C8 \
+    56730D5401028683275BD23C23EFEFE93C4CFFFE \
   ; do \
     gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
   done
@@ -30,14 +44,10 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
   && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
   && ln -s /usr/local/bin/node /usr/bin/node
 
+RUN echo "UserKnownHostsFile /home/user/.ssh/known_hosts" >> /etc/ssh/ssh_config
+
+ENV PATH "/composer/vendor/bin:$PATH"
+ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV HOME /home/user
 
-RUN useradd --create-home --home-dir $HOME user \
-    && chown -R user:user $HOME \
-    && mkdir $home/src
-
-WORKDIR $HOME/src
-
-USER user
-
-CMD ["/bin/true"]
+CMD []
