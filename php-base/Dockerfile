@@ -54,7 +54,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
         gettext \
     && pear install Crypt_HMAC2
 
-COPY php-base/locale.gen /etc/locale.gen
+COPY locale.gen /etc/locale.gen
 
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
@@ -62,6 +62,6 @@ ENV LC_ALL en_US.UTF-8
 
 RUN locale-gen
 
-COPY php-base/php.ini /usr/local/etc/php/
+COPY php.ini /usr/local/etc/php/
 
 CMD ["/bin/true"]
