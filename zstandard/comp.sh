@@ -2,7 +2,6 @@
 
 set -x
 
-
 info()    { echo "[INFO]    $@" >&2 ; }
 warning() { echo "[WARNING] $@" >&2 ; }
 error()   { echo "[ERROR]   $@" >&2 ; }
@@ -18,6 +17,7 @@ if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
 
     source_files=${1:-""}
     archive_name=${2:-""}
+    compression_level=${3:-3}
 
     if [ -z "$source_files" ]; then
         fatal "specify source files"
@@ -27,6 +27,6 @@ if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
         fatal "specify archive name"
     fi
 
-    tar -cf /tmp/tmp.tar $source_files && zstd -o "$archive_name" /tmp/tmp.tar
+    tar -cf /tmp/tmp.tar $source_files && zstd -$compression_level -o "$archive_name" /tmp/tmp.tar
 
 fi
