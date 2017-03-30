@@ -5,6 +5,9 @@ This image contains:
 + nodejs 7.7.2
 + composer
 + [phan](https://github.com/etsy/phan)
++ PHPMD (https://github.com/phpmd/phpmd)
++ PHPCPD (https://github.com/sebastianbergmann/phpcpd)
++ PHPCS (https://github.com/squizlabs/PHP_CodeSniffer)
 
 It also contains the following tools:
 + mediainfo

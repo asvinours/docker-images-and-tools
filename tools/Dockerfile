@@ -1,9 +1,25 @@
 FROM asvinours/php-base:latest
 
 # Install composer and phan
-RUN bash -c "wget http://getcomposer.org/composer.phar && chmod +x composer.phar && mv composer.phar /usr/local/bin/composer" \
+RUN wget http://getcomposer.org/composer.phar \
+    && chmod +x composer.phar \
+    && mv composer.phar /usr/local/bin/composer \
     && curl -SsL https://github.com/etsy/phan/releases/download/0.9.0/phan.phar -o /usr/local/bin/phan \
     && chmod +x /usr/local/bin/phan
+
+# Add PHPMD, PHPCS and PHPCPD
+RUN wget -c http://static.phpmd.org/php/latest/phpmd.phar \
+    && chmod +x phpmd.phar \
+    && mv phpmd.phar /usr/local/bin/phpmd \
+    && wget https://phar.phpunit.de/phpcpd.phar \
+    && chmod +x phpcpd.phar \
+    && mv phpcpd.phar /usr/local/bin/phpcpd \
+    && curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar \
+    && chmod +x phpcs.phar \
+    && mv phpcs.phar /usr/local/bin/phpcs \
+    && curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar \
+    && chmod +x phpcbf.phar \
+    && mv phpcbf.phar /usr/local/bin/phpcbf
 
 # Install php-ast extension
 RUN git clone https://github.com/nikic/php-ast.git /tmp/php-ast \
