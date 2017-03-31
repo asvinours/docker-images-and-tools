@@ -60,6 +60,20 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
   && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
   && ln -s /usr/local/bin/node /usr/bin/node
 
+# Install zstandard
+RUN mkdir -p /opt/zstd \
+    && cd /opt/zstd \
+    && git clone https://github.com/facebook/zstd.git . \
+    && make \
+    && ln -s /opt/zstd/zstd /usr/local/bin/zstd
+
+# Install zopfli
+RUN mkdir -p /opt/zopfli \
+    && cd /opt/zopfli \
+    && git clone https://github.com/google/zopfli . \
+    && make \
+    && ln -s /opt/zopfli/zopfli /usr/local/bin/zopfli
+
 RUN echo "UserKnownHostsFile /home/user/.ssh/known_hosts" >> /etc/ssh/ssh_config
 
 ENV PATH "/composer/vendor/bin:$PATH"

@@ -15,6 +15,8 @@ It also contains the following tools:
 + git
 + zip
 + ssh
++ zstd
++ zopfli
 
 # Usage example
 
@@ -29,5 +31,5 @@ docker run --rm -it \
     composer install
 ```
 
-To cache known_hosts file you can add option `-v $PDW/.ssh:/home/user/.ssh` but make sure that .ssh directory 
+To cache known_hosts file you can add option `-v $PDW/.ssh:/home/user/.ssh` but make sure that .ssh directory
 exists before doing so.
