@@ -1,5 +1,7 @@
 FROM asvinours/php-base:latest
 
+RUN apt-get update && apt-get install -y rsync
+
 # Install composer and phan
 RUN wget http://getcomposer.org/composer.phar \
     && chmod +x composer.phar \
