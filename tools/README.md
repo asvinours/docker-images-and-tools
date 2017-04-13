@@ -15,8 +15,9 @@ It also contains the following tools:
 + git
 + zip
 + ssh
-+ zstd
-+ zopfli
++ [zstd](https://github.com/facebook/zstd)
++ [zopfli](https://github.com/google/zopfli)
++ [brotli](https://github.com/google/brotli)
 
 # Usage example
 

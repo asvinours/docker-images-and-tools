@@ -1,6 +1,6 @@
 FROM asvinours/php-base:latest
 
-RUN apt-get update && apt-get install -y rsync
+RUN apt-get update && apt-get install -y rsync cmake
 
 # Install composer and phan
 RUN wget http://getcomposer.org/composer.phar \
@@ -75,6 +75,17 @@ RUN mkdir -p /opt/zopfli \
     && git clone https://github.com/google/zopfli . \
     && make \
     && ln -s /opt/zopfli/zopfli /usr/local/bin/zopfli
+
+# Install Brotli
+RUN mkdir -p /opt/brotli \
+      && cd /opt/brotli \
+      && git clone https://github.com/google/brotli.git . \
+      && mkdir out \
+      && cd out \
+      && ../configure-cmake \
+      && make \
+      && make test \
+      && make install
 
 RUN echo "UserKnownHostsFile /home/user/.ssh/known_hosts" >> /etc/ssh/ssh_config
 
