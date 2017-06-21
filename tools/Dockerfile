@@ -1,12 +1,12 @@
 FROM asvinours/php-base:latest
 
-RUN apt-get update && apt-get install -y rsync cmake
+RUN apt-get update && apt-get install -y rsync cmake trimage
 
 # Install composer and phan
 RUN wget http://getcomposer.org/composer.phar \
     && chmod +x composer.phar \
     && mv composer.phar /usr/local/bin/composer \
-    && curl -SsL https://github.com/etsy/phan/releases/download/0.9.0/phan.phar -o /usr/local/bin/phan \
+    && curl -SsL https://github.com/etsy/phan/releases/download/0.9.2/phan.phar -o /usr/local/bin/phan \
     && chmod +x /usr/local/bin/phan
 
 # Add PHPMD, PHPCS and PHPCPD
@@ -52,7 +52,7 @@ RUN set -ex \
   done
 
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 7.7.2
+ENV NODE_VERSION 8.1.2
 
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
   && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
