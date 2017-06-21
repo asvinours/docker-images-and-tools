@@ -1,6 +1,15 @@
 FROM asvinours/php-base:latest
 
-RUN apt-get update && apt-get install -y rsync cmake trimage
+RUN apt-get update \
+    && apt-get install -y \
+        rsync \
+        cmake \
+        pngquant \
+        autoconf \
+        automake \
+        libtool \
+        nasm \
+        make
 
 # Install composer and phan
 RUN wget http://getcomposer.org/composer.phar \
@@ -74,18 +83,30 @@ RUN mkdir -p /opt/zopfli \
     && cd /opt/zopfli \
     && git clone https://github.com/google/zopfli . \
     && make \
-    && ln -s /opt/zopfli/zopfli /usr/local/bin/zopfli
+    && make zopflipng \
+    && ln -s /opt/zopfli/zopfli /usr/local/bin/zopfli \
+    && ln -s /opt/zopfli/zopflipng /usr/local/bin/zopflipng
 
 # Install Brotli
 RUN mkdir -p /opt/brotli \
-      && cd /opt/brotli \
-      && git clone https://github.com/google/brotli.git . \
-      && mkdir out \
-      && cd out \
-      && ../configure-cmake \
-      && make \
-      && make test \
-      && make install
+    && cd /opt/brotli \
+    && git clone https://github.com/google/brotli.git . \
+    && mkdir out \
+    && cd out \
+    && ../configure-cmake \
+    && make \
+    && make test \
+    && make install
+
+RUN mkdir -p /opt/mozjpeg \
+    && cd /opt/mozjpeg \
+    && git clone https://github.com/mozilla/mozjpeg.git . \
+    && git checkout v3.2 \
+    && autoreconf -fiv \
+    && mkdir build && cd build \
+    && sh ../configure \
+    && make install \
+    && ln -s /opt/mozjpeg/bin/jpegtran /usr/local/bin/mozjpeg
 
 RUN echo "UserKnownHostsFile /home/user/.ssh/known_hosts" >> /etc/ssh/ssh_config
 
