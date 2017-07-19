@@ -9,6 +9,7 @@ RUN apt-get update \
         automake \
         libtool \
         nasm \
+        jq \
         make
 
 # Install composer and phan
