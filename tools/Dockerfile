@@ -108,8 +108,8 @@ RUN mkdir -p /opt/mozjpeg \
     && make install \
     && ln -s /opt/mozjpeg/bin/jpegtran /usr/local/bin/mozjpeg
 
-ADD https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 /usr/local/bin/jq \
-    && chmod +x /usr/local/bin/jq
+ADD https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 /usr/local/bin/jq
+RUN chmod +x /usr/local/bin/jq
 
 RUN echo "UserKnownHostsFile /home/user/.ssh/known_hosts" >> /etc/ssh/ssh_config
 
