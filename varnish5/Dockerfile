@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:stretch-slim
 
 LABEL maintainer "Fabrice Baumann"
 
@@ -46,6 +46,18 @@ RUN curl -SLO "https://github.com/varnish/varnish-modules/archive/$VMOD_MODULES_
     && ./configure VARNISHSRC=/usr/src/varnish-cache/ \
     && make \
     && make install
+
+ENV PKG_CONFIG_PATH "/usr/src/varnish-cache/lib/pkgconfig"
+
+RUN curl -SLO "https://github.com/varnish/libvmod-digest/archive/libvmod-digest-1.0.1.tar.gz" \
+    && mkdir -p /usr/local/varnish-digest \
+    && tar -xzvf "libvmod-digest-1.0.1.tar.gz" -C /usr/local/varnish-digest --strip-components=1 \
+    && cd /usr/local/varnish-digest \
+    && ./autogen.sh \
+    && ./configure \
+    && make \
+    && make install
+
 
 
 RUN ldconfig # rebuild the library cache (otherwise varnishlog will cry)

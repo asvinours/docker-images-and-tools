@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:stretch-slim
 
 # References
 # https://www.varnish-cache.org/docs/3.0/installation/install.html#configuring-and-compiling
@@ -7,7 +7,6 @@ FROM debian:jessie
 RUN apt-get update && apt-get install -y \
         python \
         python-docutils \
-        libgeoip-dev \
         libmhash-dev \
         dpkg-dev \
         autotools-dev \
@@ -36,7 +35,7 @@ RUN cd /usr/src \
 
 # Compile vmods
 RUN cd /usr/src \
-    &&  for vmodDir in libvmod-digest libvmod-geoip libvmod-header libvmod-timeutils libvmod-var; do \
+    &&  for vmodDir in libvmod-digest libvmod-header libvmod-timeutils libvmod-var; do \
             cd /usr/src/$vmodDir \
                 && ./autogen.sh \
                 && ./configure VARNISHSRC=/usr/src/varnish-cache/ \
