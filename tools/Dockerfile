@@ -1,4 +1,4 @@
-FROM asvinours/php-base:latest
+FROM asvinours/php-base:7.0
 
 RUN apt-get update \
     && apt-get install -y \
